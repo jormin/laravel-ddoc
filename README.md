@@ -35,6 +35,24 @@
 
 安装扩展后，浏览器访问 `[http|https]://[your domain or ip]/ddoc`
 
+## 参考问题
+
+1. Q：导出的 `PDF` 文件中文不显示或者乱码？
+	
+	A：导致此问题的原因是机器上没有安装中文字体，解决方式如下
+	
+	```
+	1、先从本级或者网络上下载所需的中文字体
+	2、修改字体文件的权限，使root用户以外的用户也可以使用
+		$ cd /usr/share/fonts/chinese/
+	3、建立字体缓存
+		$ sudo mkfontscale
+		$ # 如果提示 mkfontscale: command not found，则需要安装# sudo apt-get install ttf-mscorefonts-installer
+		$ sudo mkfontdir 
+		$ sudo fc-cache -fv
+		$ # 如果提示 fc-cache: command not found，则需要安装# sudo apt-get install fontconfig
+	```
+
 ## 参考图
 
 ![](https://qiniu.blog.lerzen.com/8a066a40-161b-11e7-92cc-e978e5791021.jpg)
