@@ -29,7 +29,7 @@
 	
 	- `laravel-ddoc.php`：本扩展配置文件，用于配置文档底部 `Copyright` 文案和链接。
 	
-	- `snappy.php`：[laravel-snappy](https://github.com/barryvdh/laravel-snappy) 的配置文件，用于配置导出 `pdf` 的选项
+	- `snappy.php`：[laravel-snappy](https://github.com/barryvdh/laravel-snappy) 的配置文件，用于配置导出 `pdf` 的选项。
 	
 	    >`pdf.binary` 项配置 `wkhtmltopdf` 执行文件的目录，执行文件存放于 `项目目录/vendor/h4cc/wkhtmltopdf-[amd64|i386]/bin/` 目录下，如果是 `windows` 系统，配置内容需要包在 `双引号` 里面，如：
 	    > `'binary' => '"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf"'`
