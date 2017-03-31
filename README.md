@@ -1,12 +1,5 @@
 # laravel-ddoc
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
-[![Software License][ico-license]](LICENSE.md)
-[![Build Status][ico-travis]][link-travis]
-[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
-[![Quality Score][ico-code-quality]][link-code-quality]
-[![Total Downloads][ico-downloads]][link-downloads]
-
 每次开发项目时，总是会被要求提供数据字典，每次手动写文档太累了，所以写了这个扩展，自动读取数据库信息并显示在网页上，支持导出Html和PDF文件。
 
 ## Install
