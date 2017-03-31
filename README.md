@@ -35,7 +35,7 @@
 	    
 	    > `linux/unix/mac` 系统的执行文件存放于 `项目目录/vendor/h4cc/wkhtmltopdf-[amd64|i386]/bin/` 目录下
 	    
-	    > `wundiws` 系统的执行文件存放于 `项目目录/vendor/wemersonjanuario/wkhtmltopdf-windows/bin/[64bit|32bit]/wkhtmltopdf.exe` 目录下
+	    > `wundiws` 系统的执行文件存放于 `项目目录/vendor/wemersonjanuario/wkhtmltopdf-windows/bin/[64bit|32bit]/` 目录下
 
 ## 使用
 
