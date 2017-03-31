@@ -31,8 +31,11 @@
 	
 	- `snappy.php`：[laravel-snappy](https://github.com/barryvdh/laravel-snappy) 的配置文件，用于配置导出 `pdf` 的选项。
 	
-	    >`pdf.binary` 项配置 `wkhtmltopdf` 执行文件的目录，执行文件存放于 `项目目录/vendor/h4cc/wkhtmltopdf-[amd64|i386]/bin/` 目录下，如果是 `windows` 系统，配置内容需要包在 `双引号` 里面，如：
-	    > `'binary' => '"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf"'`
+	    > `pdf.binary` 项配置 `wkhtmltopdf` 执行文件的目录
+	    
+	    > `linux/unix/mac` 系统的执行文件存放于 `项目目录/vendor/h4cc/wkhtmltopdf-[amd64|i386]/bin/` 目录下
+	    
+	    > `wundiws` 系统的执行文件存放于 `项目目录/vendor/wemersonjanuario/wkhtmltopdf-windows/bin/[64bit|32bit]/wkhtmltopdf.exe` 目录下
 
 ## 使用
 
@@ -45,7 +48,7 @@
 	A：导致此问题的原因是机器上没有安装中文字体，解决方式如下
 	
 	```
-	1、先从本级或者网络上下载所需的中文字体
+	1、先从本机或者网络上下载所需的中文字体
 	2、修改字体文件的权限，使root用户以外的用户也可以使用
 		$ cd /usr/share/fonts/chinese/
 	3、建立字体缓存
