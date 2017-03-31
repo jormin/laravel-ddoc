@@ -32,23 +32,6 @@ class DDocServiceProvider extends ServiceProvider
         if (! $this->app->routesAreCached()) {
             require __DIR__.'/routes.php';
         }
-        if($this->app['config']->get('laravel-ddoc.pdf.enabled')){
-            $this->app->singleton('laravel-ddoc.pdf', function($app) {
-                $binary = $app['config']->get('laravel-ddoc.pdf.binary', '/usr/local/bin/wkhtmltopdf-amd64');
-                $options = $app['config']->get('laravel-ddoc.pdf.options', array());
-                $env = $app['config']->get('laravel-ddoc.pdf.env', array());
-                $timeout = $app['config']->get('laravel-ddoc.pdf.timeout', false);
-                $snappy = new IlluminateSnappyPdf($app['files'], $binary, $options, $env);
-                if (false !== $timeout) {
-                    $snappy->setTimeout($timeout);
-                }
-                return $snappy;
-            });
-
-            $this->app->singleton('laravel-ddoc.pdf.wrapper', function($app) {
-                return new PdfWrapper($app['laravel-ddoc.pdf']);
-            });
-        }
     }
 
     /**
