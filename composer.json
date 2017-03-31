@@ -21,8 +21,6 @@
         "illuminate/support": "5.0.x|5.1.x|5.2.x|5.3.x|5.4.x",
         "php" : "~5.6|~7.0",
         "barryvdh/laravel-snappy": "^0.3.3",
-        "h4cc/wkhtmltoimage-amd64": "0.12.x",
-        "h4cc/wkhtmltoimage-i386": "0.12.x",
         "h4cc/wkhtmltopdf-amd64": "0.12.x",
         "h4cc/wkhtmltopdf-i386": "0.12.x"
     },

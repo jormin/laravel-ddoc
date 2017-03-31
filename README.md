@@ -2,9 +2,9 @@
 
 每次开发项目时，总是会被要求提供数据字典，每次手动写文档太累了，所以写了这个扩展，自动读取数据库信息并显示在网页上，支持导出Html和PDF文件。
 
-## Install
+## 安装
 
-Via Composer
+
 
 ``` bash
 $ composer require jormin/laravel-ddoc
