@@ -1,4 +1,4 @@
-每次开发项目时，总是会被要求提供数据字典，每次手动写文档太累了，所以写了这个扩展，自动读取数据库信息并显示在网页上，支持导出Html和PDF文件。
+每次开发项目时，总是会被要求提供数据字典，每次手动写文档太累了，所以写了这个扩展，自动读取数据库信息并显示在网页上，支持导出 `Html` 和 `PDF` 文件。
 
 > 1. 导出 `Html` 实际为生成并导出一个离线版本的压缩包。
 > 2. 导出 `PDF` 使用了 [laravel-snappy](https://github.com/barryvdh/laravel-snappy)扩展包
@@ -22,14 +22,17 @@
 2. 创建配置文件：
 
 	```shell
-	php artisan vendor:publish --provider="Jormin\DDoc\DDocServiceProvider"
+	php artisan vendor:publish
 	```
 	
 	执行命令后会在 `config` 目录下生成两个文件：
 	
 	- `laravel-ddoc.php`：本扩展配置文件，用于配置文档底部 `Copyright` 文案和链接。
 	
-	- `snappy.php`：[laravel-snappy](https://github.com/barryvdh/laravel-snappy) 的配置文件，用于配置导出 `pdf` 的选项，`pdf.binary` 项配置 `wkhtmltopdf` 执行文件的目录，执行文件存放于 `项目目录/vendor/h4cc/wkhtmltopdf-[amd64|i386]/bin/` 目录下。
+	- `snappy.php`：[laravel-snappy](https://github.com/barryvdh/laravel-snappy) 的配置文件，用于配置导出 `pdf` 的选项
+	
+	    >`pdf.binary` 项配置 `wkhtmltopdf` 执行文件的目录，执行文件存放于 `项目目录/vendor/h4cc/wkhtmltopdf-[amd64|i386]/bin/` 目录下，如果是 `windows` 系统，配置内容需要包在 `双引号` 里面，如：
+	    > `'binary' => '"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf"'`
 
 ## 使用
 
