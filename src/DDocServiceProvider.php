@@ -13,6 +13,11 @@ class DDocServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // 发布配置文件
+        $this->publishes([
+            __DIR__.'/../config/laravel-ddoc.php' => config_path('laravel-ddoc.php'),
+        ]);
+
         // 发布视图文件
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'ddoc');
         $this->publishes([
