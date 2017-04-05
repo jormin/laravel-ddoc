@@ -19,6 +19,7 @@ class DDocServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/laravel-ddoc.php' => config_path('laravel-ddoc.php'),
         ]);
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'ddoc');
         // 注册路由
         if (! $this->app->routesAreCached()) {
             require __DIR__.'/routes.php';
