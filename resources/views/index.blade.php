@@ -49,7 +49,7 @@
                     <div class="page-header" align="center">
                         <h1>{{ config('app.name', '') }}数据字典</h1>
                     </div>
-                    @foreach($tables as $table)
+                    @foreach($tables as $key => $table)
                         <div class="table-item" id="{{ $table->Name }}">
                             <div class="panel panel-default">
                                 <div class="panel-heading">{{ $key+1 }}.&nbsp;{{ $table->Name }}</div>
