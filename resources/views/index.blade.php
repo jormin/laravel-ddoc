@@ -52,7 +52,7 @@
                     @foreach($tables as $table)
                         <div class="table-item" id="{{ $table->Name }}">
                             <div class="panel panel-default">
-                                <div class="panel-heading">{{ $loop->iteration }}.&nbsp;{{ $table->Name }}</div>
+                                <div class="panel-heading">{{ $key+1 }}.&nbsp;{{ $table->Name }}</div>
                                 <div class="panel-body">
                                     {{ $table->Comment }}
                                 </div>
@@ -84,7 +84,7 @@
                                 </table>
                             </div>
                         </div>
-                        @if (!$loop->last)
+                        @if ($key !== (count($tables)-1))
                             <hr>
                         @endif
                     @endforeach
