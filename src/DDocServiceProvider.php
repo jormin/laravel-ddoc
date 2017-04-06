@@ -22,7 +22,7 @@ class DDocServiceProvider extends ServiceProvider
         // 发布视图文件
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'ddoc');
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/laravel-ddoc'),
+            __DIR__.'/../resources/views' => base_path('resources/views/vendor/laravel-ddoc'),
         ]);
         // 发布资源文件
         $this->publishes([
