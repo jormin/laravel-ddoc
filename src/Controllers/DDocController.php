@@ -21,7 +21,7 @@ class DDocController extends Controller
         $tables = DB::select('SHOW TABLE STATUS ');
         foreach ($tables as $key => $table) {
             //获取改表的所有字段信息
-            $columns = DB::select("SHOW FULL FIELDS FROM ".$table->Name);
+            $columns = DB::select("SHOW FULL FIELDS FROM `".$table->Name."`");
             $table->columns = $columns;
             $tables[$key] = $table;
         }
