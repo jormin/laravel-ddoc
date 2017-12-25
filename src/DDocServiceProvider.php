@@ -29,7 +29,8 @@ class DDocServiceProvider extends ServiceProvider
             __DIR__.'/../public/' => public_path(''),
         ]);
         // 注册路由
-        if (! $this->app->routesAreCached()) {
+        if ((method_exists($this->app, 'routesAreCached') && !$this->app->routesAreCached())
+           || $this->isLumen()) {
             require __DIR__.'/routes.php';
         }
     }
@@ -42,5 +43,10 @@ class DDocServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register('Barryvdh\Snappy\ServiceProvider');
+    }
+
+    protected function isLumen()
+    {
+        return strpos($this->app->version(), 'Lumen') !== false;
     }
 }
