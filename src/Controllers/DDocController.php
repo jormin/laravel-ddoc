@@ -53,7 +53,7 @@ class DDocController extends Controller
         $filename = config('app.name').'数据字典';
         switch($type){
             case 'html':
-                $zippath = __DIR__.'/'.$filename.'.zip';
+                $zippath = storage_path($filename.'.zip');
                 $zip = new \ZipArchive;
                 $res = $zip->open($zippath, \ZipArchive::CREATE);
                 if ($res === TRUE) {
