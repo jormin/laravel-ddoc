@@ -46,7 +46,7 @@ class DDocController extends Controller
      */
     public function export($type)
     {
-        if(!in_array($type,array('html','pdf'))){
+        if(!in_array($type,array('html','pdf','md'))){
             return null;
         }
         $tables = $this->initTablesData();
@@ -88,6 +88,16 @@ class DDocController extends Controller
                 $pdf = SnappyPdf::loadView('ddoc::index', compact('tables'));
                 return $pdf->download($filename);
                 break;
+            case 'md':
+                $filename .= '.md';
+                $content = $this->getMdContent();
+                $response =  new Response($content, 200, array(
+                    'Content-Type' => 'application/octet-stream',
+                    'Accept-Length' => strlen($content),
+                    'Content-Disposition' =>  'attachment; filename="'.$filename
+                ));
+
+                return $response;
         }
     }
 
@@ -111,5 +121,51 @@ class DDocController extends Controller
             }
         }
         @closedir($path);
+    }
+
+    /**
+     * md 内容
+     *
+     * @param $table
+     */
+    private function getMdContent()
+    {
+        $tables = $this->initTablesData();
+        $content = '';
+        foreach ($tables as $table){
+            $content .= $this->tableName($table);
+        }
+        foreach ($tables as $table){
+            $content .= $this->tableDetail($table);
+        }
+        return $content;
+    }
+
+    /**
+     * 数据库 表名字
+     *
+     * @param $table
+     */
+    private function tableName($table)
+    {
+
+        $content = '* ['.$table->Name.']('.'#'.$table->Name.")\n";
+        return $content;
+    }
+
+    /**
+     *数据库 详情
+     *
+     * @param $table
+     */
+    private function tableDetail($table)
+    {
+        $content ='## '.$table->Name."\n";
+        $content .="|字段名称|字段类型|字段含义|\n|:---:|:---:|:---:|\n";
+        foreach ($table->columns as $column){
+
+            $content .='|'.$column->Field.'|'.$column->Type.'|'.$column->Comment."|\n";
+        }
+        return $content;
     }
 }
