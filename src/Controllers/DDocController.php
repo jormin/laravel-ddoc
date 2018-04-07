@@ -131,12 +131,13 @@ class DDocController extends Controller
     private function getMdContent()
     {
         $tables = $this->initTablesData();
-        $content = '';
+        $content = "## 数据字典\n";
         foreach ($tables as $table){
             $content .= $this->tableName($table);
         }
-        foreach ($tables as $table){
-            $content .= $this->tableDetail($table);
+        $content .= "\n";
+        foreach ($tables as $key => $table){
+            $content .= $this->tableDetail($key, $table);
         }
         return $content;
     }
@@ -148,23 +149,24 @@ class DDocController extends Controller
      */
     private function tableName($table)
     {
-
-        $content = '* ['.$table->Name.']('.'#'.$table->Name.")\n";
+        $content = "* [".$table->Name."](#".$table->Name.")\n";
         return $content;
     }
 
     /**
      *数据库 详情
      *
+     * @param $key
      * @param $table
      */
-    private function tableDetail($table)
+    private function tableDetail($key, $table)
     {
-        $content ='## '.$table->Name."\n";
-        $content .="|字段名称|字段类型|字段含义|\n|:---:|:---:|:---:|\n";
+        $content = "\n\n-------------------\n\n";
+        $content .= "<h3 id='".$table->Name."'>".($key+1).". ".$table->Name."<h3>\n";
+		$table->Comment && $content .= '> '.$table->Comment."\n";
+        $content .= "|字段|类型|为空|键|默认值|特性|备注|\n|:---:|:---:|:---:|:---:|:---:|:---:|:---:|\n";
         foreach ($table->columns as $column){
-
-            $content .='|'.$column->Field.'|'.$column->Type.'|'.$column->Comment."|\n";
+            $content .= "|".$column->Field."|".$column->Type."|".$column->Null."|".$column->Key."|".$column->Default."|".$column->Extra."|".$column->Comment."|\n";
         }
         return $content;
     }
