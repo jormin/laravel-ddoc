@@ -1,7 +1,8 @@
-每次开发项目时，总是会被要求提供数据字典，每次手动写文档太累了，所以写了这个扩展，`自动读取数据库信息` 并显示在网页上，支持导出 `Html` 和 `PDF` 文件。
+每次开发项目时，总是会被要求提供数据字典，每次手动写文档太累了，所以写了这个扩展，`自动读取数据库信息` 并显示在网页上，支持导出 `Html` 、`PDF` 和 `Markdown` 文件。
 
 > 1. 导出 `Html` 实际为生成并导出一个离线版本的压缩包。
 > 2. 导出 `PDF` 使用了 [laravel-snappy](https://github.com/barryvdh/laravel-snappy)扩展包
+> 3. 导出 `Markdown` 为数据表增加了锚点链接。
 
 ## 安装
 
@@ -68,6 +69,8 @@
 ![](https://qiniu.blog.lerzen.com/a2d1f730-161b-11e7-a10b-458e1139cb1a.jpg)
 
 ![](https://qiniu.blog.lerzen.com/cd6439d0-161b-11e7-83ae-01bf49de6b3e.jpg)
+
+![](https://qiniu.blog.lerzen.com/efdd8450-3a87-11e8-8db8-ddc9fa0fb744.jpg)
 
 ## License
 
