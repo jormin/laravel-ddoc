@@ -162,7 +162,7 @@ class DDocController extends Controller
     private function tableDetail($key, $table)
     {
         $content = "\n\n-------------------\n\n";
-        $content .= "<h3 id='".$table->Name."'>".($key+1).". ".$table->Name."<h3>\n\n";
+        $content .= "<h3 id='".$table->Name."'>".($key+1).". ".$table->Name."</h3>\n\n";
 		$table->Comment && $content .= '> '.$table->Comment."\n\n";
         $content .= "|字段|类型|为空|键|默认值|特性|备注|\n|:---:|:---:|:---:|:---:|:---:|:---:|:---:|\n";
         foreach ($table->columns as $column){
