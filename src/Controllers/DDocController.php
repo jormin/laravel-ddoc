@@ -67,9 +67,9 @@ class DDocController extends Controller
                         $protocol = 'https://';
                     }
                     $obj = str_replace($protocol.$_SERVER['HTTP_HOST'].'/vendor/laravel-ddoc','.',$obj);
-                    $html = HtmlDomParser::file_get_html($obj);
+                    $html = HtmlDomParser::str_get_html($obj);
                     $html->find('div[class=export-wrap]',0)->outertext = '';
-                    $zip->addFromString($filename.'.html', $html);
+                    $zip->addFromString('index.html', $html);
                     $zip->close();
                 } else {
                     return null;
