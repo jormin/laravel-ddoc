@@ -8,7 +8,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\View;
-use voku\helper\HtmlDomParser;
 
 class DDocController extends Controller
 {
@@ -22,7 +21,7 @@ class DDocController extends Controller
         $tables = DB::select('SHOW TABLE STATUS ');
         foreach ($tables as $key => $table) {
             //获取改表的所有字段信息
-            $columns = DB::select("SHOW FULL FIELDS FROM `".$table->Name."`");
+            $columns = DB::select("SHOW FULL FIELDS FROM `" . $table->Name . "`");
             $table->columns = $columns;
             $tables[$key] = $table;
         }
@@ -37,7 +36,7 @@ class DDocController extends Controller
     public function index()
     {
         $tables = $this->initTablesData();
-        return view('ddoc::index',compact('tables'));
+        return view('ddoc::index', compact('tables'));
     }
 
     /**
@@ -47,37 +46,39 @@ class DDocController extends Controller
      */
     public function export($type)
     {
-        if(!in_array($type,array('html','pdf','md'))){
+        if (!in_array($type, array('html', 'pdf', 'md'))) {
             return null;
         }
         $tables = $this->initTablesData();
-        $filename = config('app.name').'数据字典';
-        switch($type){
+        $filename = config('app.name') . '数据字典';
+        switch ($type) {
             case 'html':
-                $zippath = storage_path($filename.'.zip');
+                $zippath = storage_path($filename . '.zip');
                 $zip = new \ZipArchive;
                 $res = $zip->open($zippath, \ZipArchive::CREATE);
-                if ($res === TRUE) {
+                if ($res === true) {
                     // 添加静态资源文件
-                    $this->addFileToZip('vendor/laravel-ddoc',$zip);
+                    $this->addFileToZip('vendor/laravel-ddoc', $zip);
                     // 生成Html文件
-                    $obj = View::make('ddoc::index', compact('tables'),array())->render();
+                    require_once(__DIR__ . '/../Lib/simple_html_dom.php');
+                    $obj = View::make('ddoc::index', compact('tables'), array())->render();
                     $protocol = 'http://';
-                    if(Request::secure()){
+                    if (Request::secure()) {
                         $protocol = 'https://';
                     }
-                    $obj = str_replace($protocol.$_SERVER['HTTP_HOST'].'/vendor/laravel-ddoc','.',$obj);
-                    $html = HtmlDomParser::str_get_html($obj);
-                    $html->find('div[class=export-wrap]',0)->outertext = '';
+                    $obj = str_replace($protocol . $_SERVER['HTTP_HOST'] . '/vendor/laravel-ddoc', '.', $obj);
+                    $html = new \simple_html_dom();
+                    $html->load($obj);
+                    $html->find('div[class=export-wrap]', 0)->outertext = '';
                     $zip->addFromString('index.html', $html);
                     $zip->close();
                 } else {
                     return null;
                 }
 
-                $response =  new Response(file_get_contents($zippath), 200, array(
+                $response = new Response(file_get_contents($zippath), 200, array(
                     'Content-Type' => 'application/zip',
-                    'Content-Disposition' =>  'attachment; filename="'.$filename.'.zip"'
+                    'Content-Disposition' => 'attachment; filename="' . $filename . '.zip"'
                 ));
                 unlink($zippath);
                 return $response;
@@ -90,10 +91,10 @@ class DDocController extends Controller
             case 'md':
                 $filename .= '.md';
                 $content = $this->getMdContent();
-                $response =  new Response($content, 200, array(
+                $response = new Response($content, 200, array(
                     'Content-Type' => 'application/octet-stream',
                     'Accept-Length' => strlen($content),
-                    'Content-Disposition' =>  'attachment; filename="'.$filename
+                    'Content-Disposition' => 'attachment; filename="' . $filename
                 ));
 
                 return $response;
@@ -106,16 +107,17 @@ class DDocController extends Controller
      * @param $path
      * @param $zip
      */
-    private function addFileToZip($path, $zip) {
+    private function addFileToZip($path, $zip)
+    {
         $handler = opendir(public_path($path));
         while (($filename = readdir($handler)) !== false) {
-            if (!in_array($filename,array('.','..','.DS_Store'))) {
+            if (!in_array($filename, array('.', '..', '.DS_Store'))) {
                 if (is_dir($path . "/" . $filename)) {
                     $this->addFileToZip($path . "/" . $filename, $zip);
                 } else { //将文件加入zip对象
                     $fullname = public_path($path) . "/" . $filename;
-                    $localname = str_replace('vendor/laravel-ddoc/','','/'.$path.'/'.$filename);
-                    $zip->addFile($fullname,$localname);
+                    $localname = str_replace('vendor/laravel-ddoc/', '', '/' . $path . '/' . $filename);
+                    $zip->addFile($fullname, $localname);
                 }
             }
         }
@@ -131,11 +133,11 @@ class DDocController extends Controller
     {
         $tables = $this->initTablesData();
         $content = "## 数据字典\n";
-        foreach ($tables as $table){
+        foreach ($tables as $table) {
             $content .= $this->tableName($table);
         }
         $content .= "\n";
-        foreach ($tables as $key => $table){
+        foreach ($tables as $key => $table) {
             $content .= $this->tableDetail($key, $table);
         }
         return $content;
@@ -148,7 +150,7 @@ class DDocController extends Controller
      */
     private function tableName($table)
     {
-        $content = "* [".$table->Name."](#".$table->Name.")\n";
+        $content = "* [" . $table->Name . "](#" . $table->Name . ")\n";
         return $content;
     }
 
@@ -161,11 +163,11 @@ class DDocController extends Controller
     private function tableDetail($key, $table)
     {
         $content = "\n\n-------------------\n\n";
-        $content .= "<h3 id='".$table->Name."'>".($key+1).". ".$table->Name."</h3>\n\n";
-		$table->Comment && $content .= '> '.$table->Comment."\n\n";
+        $content .= "<h3 id='" . $table->Name . "'>" . ($key + 1) . ". " . $table->Name . "</h3>\n\n";
+        $table->Comment && $content .= '> ' . $table->Comment . "\n\n";
         $content .= "|字段|类型|为空|键|默认值|特性|备注|\n|:---:|:---:|:---:|:---:|:---:|:---:|:---:|\n";
-        foreach ($table->columns as $column){
-            $content .= "|".$column->Field."|".$column->Type."|".$column->Null."|".$column->Key."|".$column->Default."|".$column->Extra."|".$column->Comment."|\n";
+        foreach ($table->columns as $column) {
+            $content .= "|" . $column->Field . "|" . $column->Type . "|" . $column->Null . "|" . $column->Key . "|" . $column->Default . "|" . $column->Extra . "|" . $column->Comment . "|\n";
         }
         return $content;
     }

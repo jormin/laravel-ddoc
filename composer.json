@@ -23,8 +23,6 @@
         "h4cc/wkhtmltopdf-amd64": "0.12.x",
         "h4cc/wkhtmltopdf-i386": "0.12.x",
         "illuminate/support": "5.*|6.*",
-        "voku/simple_html_dom": "4.7.7",
-        "symfony/css-selector": "v5.0.1",
         "wemersonjanuario/wkhtmltopdf-windows": "0.12.x"
     },
     "require-dev": {
