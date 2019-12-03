@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\View;
+use voku\helper\HtmlDomParser;
 
 class DDocController extends Controller
 {
@@ -60,15 +61,13 @@ class DDocController extends Controller
                     // 添加静态资源文件
                     $this->addFileToZip('vendor/laravel-ddoc',$zip);
                     // 生成Html文件
-                    require_once (__DIR__.'/../Lib/simple_html_dom.php');
                     $obj = View::make('ddoc::index', compact('tables'),array())->render();
                     $protocol = 'http://';
                     if(Request::secure()){
                         $protocol = 'https://';
                     }
                     $obj = str_replace($protocol.$_SERVER['HTTP_HOST'].'/vendor/laravel-ddoc','.',$obj);
-                    $html = new \simple_html_dom();
-                    $html->load($obj);
+                    $html = HtmlDomParser::file_get_html($obj);
                     $html->find('div[class=export-wrap]',0)->outertext = '';
                     $zip->addFromString($filename.'.html', $html);
                     $zip->close();
