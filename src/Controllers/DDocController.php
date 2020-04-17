@@ -36,7 +36,8 @@ class DDocController extends Controller
     public function index()
     {
         $tables = $this->initTablesData();
-        return view('ddoc::index', compact('tables'));
+        $customerView = 'vendor.laravel-ddoc.index';
+        return view(view()->exists($customerView) ? $customerView : 'ddoc::index', compact('tables'));
     }
 
     /**
