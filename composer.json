@@ -45,6 +45,9 @@
         "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests"
     },
     "extra": {
+        "branch-alias": {
+            "dev-master": "1.1.x-dev"
+        }
         "laravel": {
             "providers": [
                 "Jormin\\DDoc\\DDocServiceProvider"
